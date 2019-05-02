@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+     <title>SEIZE THE DAY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/main.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/whhg.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1Kkq18RHBmSpHlzqQTi9ut-fXzRr6ehY&callback=initMap" async defer></script>
+    <style>
+        #content{
+            margin-bottom:0px;
+        }
+.card {
+/*  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+  box-shadow: 10px 10px 5px grey;
+  text-align: center;
+  padding: 6px 4px 0px 4px;
+  margin-top: 34px;
+  margin-bottom: 34px;
+  margin-left: 34px;
+  margin-right: 10px;
+  font-family: arial;
+  background-color: white;
+  border: 3px solid blue;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 1s;
+            padding-top: 60px;
+            opacity: 0.90;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+    </style>
+</head>
+    
+<body onload="initialize()">
+    
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">
+            <img src="img/logo.jpg" width="80%">
+        </a>
+        <a href="#">
+            <button class="btn btn-lg" onclick="setMarker('all')">&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                All Events
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+        <a href="#">
+            <button class="btn btn-lg" value="food" onclick="setMarker('food')">&nbsp;&nbsp;&nbsp;<i class="icon-chef"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Food&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+        <a href="#">
+            <button class="btn btn-lg" value="sport" onclick="setMarker('sport')"> &nbsp;&nbsp;&nbsp;<i class="icon-football-soccer"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Sport&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+<!--
+        <a href="#">
+            <button class="btn btn-lg" value="game" onclick="setMarker('game')">&nbsp;&nbsp;&nbsp;<i class="icon-controllerps"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Gaming&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+-->
+        <a href="#">
+            <button class="btn btn-lg" value="eco" onclick="setMarker('eco')">&nbsp;&nbsp;&nbsp;<i class="icon-leaf"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Eco, Parks&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+<!--
+        <a href="#">
+            <button class="btn btn-lg" value="bar" onclick="setMarker('bar')">&nbsp;&nbsp;&nbsp;<i class="icon-wine"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Bar&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+-->
+        <a href="#">
+            <button class="btn btn-lg" value="sale" onclick="setMarker('sale')" >&nbsp;&nbsp;&nbsp;<i class="icon-dollar"></i>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Sale&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+        <a href="list.html">
+            <button class="btn btn-lg">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                List View&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+        </a>
+    </div>
+    
+    
+    
+    <!--map-->    
+    <div id="map_canvas" class="map"></div>
+    <!--map-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/web/assets/jquery/jquery.min.js"></script> 
+    <script src="js/bootstrap.js"></script>
+  
+    <!--Google maps API linl-->
+	<script>
+        var map_w;
+        var source;
+        function closeNav() 
+        {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+        }    
+
+        var markers = [];
+        var icon;
+        
+        var locations = [
+                    [42.3087, -83.0338,'food','In-Class Food Handler Course (Windsor)<br>Thu, Dec 6, 9:30am<br>Windsor-Essex County Health Unit, Windsor, ON<br>Starts at CA$41.65','1.png'],
+                    [42.3067, -83.0378,'food','In-Class Food Handler Course (Windsor)<br>Thu, Dec 6, 9:30am<br>Windsor-Essex County Health Unit, Windsor, ON<br>Starts at CA$41.65','1.png'],
+                    [42.2806, -82.8919,'eco','W&DHDA 2nd Annual Celtic Christmas Competition<br>Sat, Dec 1, 8:00am<br>Tecumseh Vista Secondary School, Tecumseh, ON<br>Starts at CA$10.00','2.png'],
+                    [42.2706, -82.8719,'eco','W&DHDA 2nd Annual Celtic Christmas Competition<br>Sat, Dec 1, 8:00am<br>Tecumseh Vista Secondary School, Tecumseh, ON<br>Starts at CA$10.00','2.png'],
+                    [42.317432, -83.026772,'sale','F45 Tecumseh Holiday & End of Challenge Celebration<br>Sat, Dec 8, 7:00pm<br>Thompson House, Windsor, ON<br>Free','3.png'],
+                    [42.310432, -83.029772,'sale','F45 Tecumseh Holiday & End of Challenge Celebration<br>Sat, Dec 8, 7:00pm<br>Thompson House, Windsor, ON<br>Free','3.png'],
+                    [42.348495, -83.060303,'food','Sugar House Drinking Team: Pappy vs. Weller<br>Sat, Dec 22, 12:00pm<br>The Sugar House, Detroit, MI<br>Starts at $95.00','4.png'],
+                    [42.308495, -83.080303,'food','Sugar House Drinking Team: Pappy vs. Weller<br>Sat, Dec 22, 12:00pm<br>The Sugar House, Detroit, MI<br>Starts at $95.00','4.png'],
+                    [42.343254, -82.974350,'eco','Restorative Trails in the Great Cities<br>Thu, Dec 6, 7:00pm<br>Belle Isle Nature Center, Detroit, MI<br>Free','5.png'],
+                    [42.340254, -82.977350,'eco','Restorative Trails in the Great Cities<br>Thu, Dec 6, 7:00pm<br>Belle Isle Nature Center, Detroit, MI<br>Free','5.png'],
+                    [42.343264, -82.979350,'eco','Restorative Trails in the Great Cities<br>Thu, Dec 6, 7:00pm<br>Belle Isle Nature Center, Detroit, MI<br>Free','5.png'],
+                    [42.322262, 83.176315,'food','Christmas Party<br>Sat, Dec 8, 11:00am<br>Sarai Palace, Dearborn, MI<br>Free','6.png'],
+                    [42.331429, -83.045753,'food','Annual Holiday Tea<br>Sat, Dec 22, 12:00pm<br>The Whitney, Detroit, MI<br>Starts at $75.00','7.png'],
+                    [42.3091, -83.0164,'food','Christmas Bazaar at Polish Club Windsor<br>Sun, Dec 2, 11:00am<br>Polish Club Windsor, Windsor, ON<br>Free','8.png'],
+                    [42.3354, -83.0725,'food','Drink Detroit: Corktown Historic Bar Tour<br>Thu, Mar 21, 6:00pm<br>Nancy Whiskey Pub, Detroit, MI<br>','9.png'],
+                    [42.341179, -83.035378,'sport','Detroit Lions Eastern Market Tailgating<br>Sun, Dec 2, 7:00am + 1 more event<br>Eastern Market, Detroit, MI<br>Starts at $45.00','10.png'],
+                    [42.349179, -83.036378,'sport','Detroit Lions Eastern Market Tailgating<br>Sun, Dec 2, 7:00am + 1 more event<br>Eastern Market, Detroit, MI<br>Starts at $45.00','10.png'],
+                    [42.340179, -83.039378,'sport','Detroit Lions Eastern Market Tailgating<br>Sun, Dec 2, 7:00am + 1 more event<br>Eastern Market, Detroit, MI<br>Starts at $45.00','10.png'],
+                    [42.317432, -83.026772,'sale','Black Friday Sale<br>Fri, Nov 23, 7:00am<br>Windsor Crossing, Windsor, ON<br>','14.png'],
+                    [42.3002, -83.0764,'food','Multicultural Night Without Borders<br>Thu, Nov 22, 6:00pm<br>Mackenzie Hall Cultural Centre, Windsor, ON','11.png'],
+                    [42.2785, -82.9758,'sport','2019 Future Pro Goalie School Summer Camp Windsor, ON<br>Mon, Jul 8, 8:00am<br>Central Park Athletics, Windsor, Ontario<br>Starts at CA$177.72','12.png'],
+                    [42.2645, -82.9798,'sport','2019 Future Pro Goalie School Summer Camp Windsor, ON<br>Mon, Jul 8, 8:00am<br>Central Park Athletics, Windsor, Ontario<br>Starts at CA$177.72','12.png'],
+                    [42.2845, -82.9748,'sport','2019 Future Pro Goalie School Summer Camp Windsor, ON<br>Mon, Jul 8, 8:00am<br>Central Park Athletics, Windsor, Ontario<br>Starts at CA$177.72','12.png'],
+                    [42.2757, -83.0037,'sale','Black Friday Sale<br>Fri, Nov 23, 7:00am<br>Devonshire Mall, Windsor, ON','13.png'],
+                  ]
+                  
+        function CenterControl(controlDiv, map) 
+        {
+
+            // Set CSS for the control border.
+            var controlUI = document.createElement('div');
+            controlUI.style.backgroundColor = 'gray';
+            controlUI.style.border = '2px solid #fff';
+            controlUI.style.borderRadius = '3px';
+            controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+            controlUI.style.cursor = 'pointer';
+            controlUI.style.marginTop = '22px';
+            controlUI.style.paddingLeft = '22px';
+            controlUI.style.paddingRight = '22px';
+            controlUI.style.marginLeft = '22px';
+            controlUI.style.textAlign = 'center';
+            controlUI.title = 'Click to see all the category';
+            controlDiv.appendChild(controlUI);
+
+            // Set CSS for the control interior.
+            var controlText = document.createElement('div');
+            controlText.style.color = 'white';
+            controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+            controlText.style.fontSize = '18px';
+            controlText.style.lineHeight = '38px';
+            controlText.style.paddingLeft = '5px';
+            controlText.style.paddingRight = '5px';
+            controlText.innerHTML = '&#9776;&nbsp;&nbsp;&nbsp;Seize The Day';
+            controlUI.appendChild(controlText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            controlUI.addEventListener('click', function() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            });
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) 
+        {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }            
+
+                     
+        function initialize() 
+        {
+            window.LOAD = 1;
+            window.cat = "all";
+            //alert("intialize function called.");            
+            
+            //Map parametrs
+            var mapOptions = {
+                zoom: 11,
+                mapTypeControl: false,
+                fullscreenControl: false,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER
+                },
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER
+                },
+                center: new google.maps.LatLng(42.317432, -83.026772)
+                }
+
+            //map
+            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);            
+
+            // Create the DIV to hold the control and call the CenterControl()
+            // constructor passing in this DIV.
+            var centerControlDiv = document.createElement('div');
+            var centerControl = new CenterControl(centerControlDiv, map);
+
+            centerControlDiv.index = 1;
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
+            map_w = map;        
+            
+            var infowindow = new google.maps.InfoWindow();
+            var marker,i;
+            
+            for(i = 0; i<locations.length; i++)
+                {
+                    
+                    if(locations[i][2] == 'food')
+                        {
+                            icon = 'img/icon/01.png';
+                        }
+                    else if(locations[i][2] == 'sport')
+                        {
+                            icon = 'img/icon/02.png';
+                        }
+//                    else if(locations[i][2] == 'game')
+//                        {
+//                            icon = 'img/icon/03.png';                            
+//                        }
+                    else if(locations[i][2] == 'eco')
+                        {
+                            icon = 'img/icon/04.png';                            
+                        }
+//                    else if(locations[i][2] == 'bar')
+//                        {
+//                            icon = 'img/icon/07.png';                            
+//                        }
+                    else if(locations[i][2] == 'sale')
+                        {
+                            icon = 'img/icon/05.png';                            
+                        }
+                    else
+                        {
+                        
+                        }
+                    
+                    
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                        map: map,
+                        icon: icon
+                    });
+
+                     
+                  google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        //alert(infoMessage[i+1]);
+                      infowindow.setContent(
+                          '<div id="content">'+
+                                '<div class="card">'+
+                                        '<img src="img/'+locations[i][4]+'" class="img-thumbnail" style="width:100%"><br>'+
+                                        '<p style="background-color:gray;padding:5px 5px 5px 5px">'+locations[i][3]+'</p>'+
+                                        '<p><a href="#" onclick="showDirection('+
+                                                locations[i][0] +','+locations[i][1]
+                                                +')"><button>Show Direction</button></a></p>'+
+                                '</div>'+    
+                            '</div>');
+                      infowindow.open(map, marker);
+                    }
+                  })(marker, i));
+                    
+                    markers.push(marker);                    
+                }
+            
+        }
+        
+        function showDirection(lat,lng)
+        {
+            if(window.LOAD == 0)
+                {
+                    setMarker(window.cat);
+                }
+            else
+                {
+                    window.LOAD = 0;
+                }
+            window.Destination = new google.maps.LatLng(lat,lng);
+            if (navigator.geolocation) 
+            {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                pos = {lat: position.coords.latitude,lng: position.coords.longitude};
+                source = new google.maps.LatLng(pos.lat, pos.lng); 
+                }, function() {handleLocationError(true, infoWindow, map.getCenter());});
+            } 
+            else
+            {
+              handleLocationError(false, infoWindow, map.getCenter());
+            }            
+            initMAP();
+        }
+        
+      function initMAP() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setMap(map_w);
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        directionsService.route({
+          origin: source,
+          destination: window.Destination,
+          travelMode: 'WALKING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+//          alert(window.Source);
+//          alert(window.Destination);
+      }
+        
+        function setMarker(param)
+        {
+            var mapOptions = {
+                zoom: 11,
+                mapTypeControl: false,
+                fullscreenControl: false,
+                streetViewControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER
+                },
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.RIGHT_CENTER
+                },
+                center: new google.maps.LatLng(42.317432, -83.026772)
+            }
+
+            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            
+            map_w = map;
+            var i;
+            for(i=0;i<locations.length;i++)
+                {
+                    if(param == 'all')
+                        {
+                            markers[i].setMap(map);
+                        }
+                    else if(locations[i][2] === param)
+                        {
+                            markers[i].setMap(map);
+                        }
+                    else
+                        {
+                            markers[i].setMap(null);
+                        }
+                }
+
+            var centerControlDiv = document.createElement('div');
+            var centerControl = new CenterControl(centerControlDiv, map);
+
+            centerControlDiv.index = 1;
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
+            window.cat = param;
+        }
+    </script>
+</body>
+    
+</html>
